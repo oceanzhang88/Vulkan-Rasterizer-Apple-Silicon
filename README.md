@@ -14,7 +14,6 @@ Rasterizer incudes: projective camera, shader loading and parsing, Vulkan pipeli
 ## Requirements
 
 C++ Lib:
-
 * GLM
 * GLFW
 
