@@ -18,7 +18,7 @@ C++ Lib:
 * GLFW
 
 Vulkan SDK:
-* https://www.vulkan.org/tools#download-these-essential-development-tools
+* https://vulkan.lunarg.com/sdk/home
 
 ## Build on MacOS
 ```
