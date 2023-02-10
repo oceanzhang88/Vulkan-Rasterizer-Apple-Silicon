@@ -1,0 +1,22 @@
+# A Vulkan Rasterizer
+
+This C++ project is to build a modern rasterization pipeline around the Vulkan graphics API.
+
+<img src="media/preview.png" alt="drawing" width="1000"/>
+
+
+## About
+
+Get familiar with modern Vulkan Graphics API.
+Use Vulkan to build a rasterization pipeline on Apple Silicon M1/2 chip.
+Rasterizer incudes: projective camera, shader loading and parsing, Vulkan pipeline components: Device, Swap Chain, Command Buffer, Descriptor, Push Constant, loading obj models, multi-point Lighting, alpha blending and more.
+
+## Build on MacOS
+```
+./macBuild
+```
+## Run on MacOS
+```
+cd build
+./Vulkan-Rasterizer
+```
