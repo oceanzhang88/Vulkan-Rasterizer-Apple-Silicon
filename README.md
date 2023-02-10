@@ -11,6 +11,13 @@ Get familiar with modern Vulkan Graphics API.
 Use Vulkan to build a rasterization pipeline on Apple Silicon M1/2 chip.
 Rasterizer incudes: projective camera, shader loading and parsing, Vulkan pipeline components: Device, Swap Chain, Command Buffer, Descriptor, Push Constant, loading obj models, multi-point Lighting, alpha blending and more.
 
+## Requirements
+
+C++ Lib:
+
+* GLM
+* GLFW
+
 ## Build on MacOS
 ```
 ./macBuild
