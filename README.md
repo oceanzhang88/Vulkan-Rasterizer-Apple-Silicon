@@ -17,6 +17,9 @@ C++ Lib:
 * GLM
 * GLFW
 
+Vulkan SDK:
+* https://www.vulkan.org/tools#download-these-essential-development-tools
+
 ## Build on MacOS
 ```
 ./macBuild
