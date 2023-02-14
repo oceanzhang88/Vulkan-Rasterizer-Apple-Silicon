@@ -1,7 +1,7 @@
 #pragma once
 
-#include "buffer.hpp"
-#include "device.hpp"
+#include "vulkan/buffer.hpp"
+#include "vulkan/device.hpp"
 
 // libs
 #define GLM_FORCE_RADIANS

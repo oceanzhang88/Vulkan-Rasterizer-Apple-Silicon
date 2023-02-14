@@ -1,7 +1,7 @@
 #pragma once
 
-#include "descriptors.hpp"
-#include "device.hpp"
+#include "vulkan/descriptors.hpp"
+#include "vulkan/device.hpp"
 #include "game_object.hpp"
 #include "renderer.hpp"
 #include "window.hpp"

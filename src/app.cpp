@@ -1,6 +1,6 @@
 #include "app.hpp"
 
-#include "buffer.hpp"
+#include "vulkan/buffer.hpp"
 #include "camera.hpp"
 #include "keyboard_movement_controller.hpp"
 #include "systems/point_light_system.hpp"

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "device.hpp"
-#include "swap_chain.hpp"
+#include "vulkan/device.hpp"
+#include "vulkan/swap_chain.hpp"
 #include "window.hpp"
 
 // std
