@@ -130,12 +130,13 @@ void App::loadGameObjects() {
     bunny.transform.rotation = {0.0f, atan(1)*4,  atan(1)*4};
   gameObjects.emplace(bunny.getId(), std::move(bunny));
 
-  model = Model::createModelFromFile(device, "models/smooth_vase.obj");
-  auto smoothVase = OceanGameObject::createGameObject();
-  smoothVase.model = model;
-  smoothVase.transform.translation = {.5f, .5f, 0.f};
-  smoothVase.transform.scale = {3.f, 1.5f, 3.f};
-  gameObjects.emplace(smoothVase.getId(), std::move(smoothVase));
+  model = Model::createModelFromFile(device, "models/dragon.obj");
+  auto dragon = OceanGameObject::createGameObject();
+  dragon.model = model;
+  dragon.transform.translation = {.5f, .2f, 0.f};
+  dragon.transform.scale = {1.f, 1.f, 1.f};
+  dragon.transform.rotation = {PI, -PI/2, 0.0f};
+  gameObjects.emplace(dragon.getId(), std::move(dragon));
 
   model = Model::createModelFromFile(device, "models/quad.obj");
   auto floor = OceanGameObject::createGameObject();
@@ -146,15 +147,15 @@ void App::loadGameObjects() {
 
   std::vector<glm::vec3> lightColors{
       {2.f, .2f, .2f},
-      {.2f, .2f, 2.f},
-      {.2f, 2.f, .2f},
+//      {.2f, .2f, 2.f},
+//      {.2f, 2.f, .2f},
       {2.f, 2.f, .2f},
       {.2f, 2.f, 2.f},
       {2.f, 2.f, 2.f}  //
   };
 
   for (int i = 0; i < lightColors.size(); i++) {
-    auto pointLight = OceanGameObject::makePointLight(0.2f);
+    auto pointLight = OceanGameObject::makePointLight(0.5f);
     pointLight.color = lightColors[i];
     auto rotateLight = glm::rotate(
         glm::mat4(1.f),

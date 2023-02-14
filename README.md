@@ -6,10 +6,11 @@ https://user-images.githubusercontent.com/25319668/218864367-92a76afc-626b-4aa5-
 
 ## About
 
-Get familiar with modern Vulkan Graphics API.
-Use Vulkan to build a rasterization pipeline on Apple Silicon M1/2 chip.
-Rasterizer incudes: projective camera, shader loading and parsing, Vulkan pipeline components: Device, Swap Chain, Command Buffer, Descriptor, Push Constant, loading obj models, multi-point Lighting, alpha blending and more.
+Modern Vulkan Graphics API is important in many ways.
+This project uses Vulkan to build a rasterization pipeline on Apple Silicon M1/2 chip.
 
+Rasterizer incudes: projective camera, shader loading and parsing, Vulkan pipeline components: Device, Swap Chain, Command Buffer, Descriptor, Push Constant, loading obj models, multi-point Lighting, alpha blending and more.
+Meanwhile, you can move the camera around using keyboard keys.
 ## Requirements
 
 C++ Lib:
@@ -30,3 +31,9 @@ C++17 is needed to compile the project.
 cd build
 ./Vulkan-Rasterizer
 ```
+
+## Keyboard Controls
+
+* W/A/S/D/E/Q to change the camera positions.
+
+* Arrow key up/left/right/down to rotate the camera.
