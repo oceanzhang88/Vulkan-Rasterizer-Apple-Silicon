@@ -2,8 +2,7 @@
 
 This C++ project is to build a modern rasterization pipeline around the Vulkan graphics API.
 
-<img src="media/scene_preview.png" alt="drawing" width="1000"/>
-
+https://user-images.githubusercontent.com/25319668/218864367-92a76afc-626b-4aa5-8d90-f4a6bf27d9d2.mp4
 
 ## About
 
