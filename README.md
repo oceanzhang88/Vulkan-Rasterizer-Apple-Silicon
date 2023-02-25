@@ -7,7 +7,7 @@ This C++ project is to build a modern rasterization pipeline around the Vulkan g
 
 In deferred lighting model, we render objects to G-Buffer first and then render lights reading from G-Buffer. In forward mode, lights and objects are coupled together.
 
-***NOTE:*** Lighting model choice(Forward/Deferred) is how we orchestrate Vulkan API not a built-in part of Vulkan or any other Graphics APIs.
+***NOTE:*** Lighting architecture choice (Forward/Deferred/Tile Based Forward/Tile Based Deferred) is how we orchestrate Vulkan API not a built-in part of Vulkan or any other Graphics APIs.
 
 https://user-images.githubusercontent.com/25319668/218864367-92a76afc-626b-4aa5-8d90-f4a6bf27d9d2.mp4
 
