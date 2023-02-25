@@ -1,6 +1,6 @@
 # A Vulkan Rasterizer
 
-This C++ project is to build a modern rasterization pipeline around the Vulkan graphics API. 
+This C++ project is to build a modern rasterization pipeline around the Vulkan graphics APIs. 
 
 In deferred lighting model, we render objects to G-Buffer first and then render lights reading from G-Buffer. In forward mode, lights and models are coupled together.
 
