@@ -17,11 +17,11 @@ Meanwhile, you can move the camera around using keyboard keys.
 
 In deferred lighting model, we render objects to G-Buffer first and then render lights reading from G-Buffer. In forward mode, lights and objects are coupled together.
 
-Tile-based Deferred is proposed by Apple here:
+Tile-based Deferred is proposed by Apple:
 
 [TBDR](https://developer.apple.com/documentation/metal/tailor_your_apps_for_apple_gpus_and_tile-based_deferred_rendering)
 
-Tile-based Forward is proposed by a paper with a fancy name here:
+Tile-based Forward is proposed by a paper with a fancy name:
 
 [Foward+](https://takahiroharada.files.wordpress.com/2015/04/forward_plus.pdf)
 
