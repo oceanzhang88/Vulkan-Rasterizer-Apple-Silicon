@@ -172,7 +172,13 @@ void OceanBuffer::writeToIndex(void *data, int index) {
  * @param index Used in offset calculation
  *
  */
-VkResult OceanBuffer::flushIndex(int index) { return flush(alignmentSize, index * alignmentSize); }
+VkResult OceanBuffer::flushIndex(int index) {
+  assert(
+      alignmentSize % device.properties.limits.nonCoherentAtomSize == 0 &&
+      "Cannot use Buffer::flushIndex if alignmentSize isn't a multiple of Device Limits "
+      "nonCoherentAtomSize");
+  return flush(alignmentSize, index * alignmentSize);
+}
 
 /**
  * Create a buffer info descriptor

@@ -6,7 +6,7 @@
 namespace Ocean {
 
 void KeyboardMovementController::moveInPlaneXZ(
-    GLFWwindow* window, float dt, OceanGameObject& gameObject) {
+    GLFWwindow* window, float dt, GameObject& gameObject) {
   glm::vec3 rotate{0};
   if (glfwGetKey(window, keys.lookRight) == GLFW_PRESS) rotate.y += 1.f;
   if (glfwGetKey(window, keys.lookLeft) == GLFW_PRESS) rotate.y -= 1.f;

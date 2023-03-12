@@ -16,6 +16,7 @@
 #include <array>
 #include <cassert>
 #include <chrono>
+#include <iostream>
 #include <stdexcept>
 
 namespace Ocean {
@@ -26,6 +27,18 @@ App::App() {
           .setMaxSets(OceanSwapChain::MAX_FRAMES_IN_FLIGHT)
           .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, OceanSwapChain::MAX_FRAMES_IN_FLIGHT)
           .build();
+
+  // build frame descriptor pools
+  framePools.resize(OceanSwapChain::MAX_FRAMES_IN_FLIGHT);
+  auto framePoolBuilder = OceanDescriptorPool::Builder(device)
+                              .setMaxSets(1000)
+                              .addPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000)
+                              .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000)
+                              .setPoolFlags(VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT);
+  for (int i = 0; i < framePools.size(); i++) {
+    framePools[i] = framePoolBuilder.build();
+  }
+
   loadGameObjects();
 }
 
@@ -56,6 +69,9 @@ void App::run() {
         .build(globalDescriptorSets[i]);
   }
 
+  std::cout << "Alignment: " << device.properties.limits.minUniformBufferOffsetAlignment << "\n";
+  std::cout << "atom size: " << device.properties.limits.nonCoherentAtomSize << "\n";
+
   SimpleRenderSystem simpleRenderSystem{
           device,
           renderer.getSwapChainRenderPass(),
@@ -66,7 +82,7 @@ void App::run() {
           globalSetLayout->getDescriptorSetLayout()};
   Camera camera{};
 
-  auto viewerObject = OceanGameObject::createGameObject();
+  auto& viewerObject = gameObjectManager.createGameObject();
   viewerObject.transform.translation.z = -2.5f;
   KeyboardMovementController cameraController{};
 
@@ -87,13 +103,15 @@ void App::run() {
 
     if (auto commandBuffer = renderer.beginFrame()) {
       int frameIndex = renderer.getFrameIndex();
+      framePools[frameIndex]->resetPool();
       FrameInfo frameInfo{
           frameIndex,
           frameTime,
           commandBuffer,
           camera,
           globalDescriptorSets[frameIndex],
-          gameObjects};
+          *framePools[frameIndex],
+          gameObjectManager.gameObjects};
 
       // update
       GlobalUbo ubo{};
@@ -103,6 +121,10 @@ void App::run() {
       pointLightSystem.update(frameInfo, ubo);
       uboBuffers[frameIndex]->writeToBuffer(&ubo);
       uboBuffers[frameIndex]->flush();
+
+      // final step of update is updating the game objects buffer data
+      // The render functions MUST not change a game objects transform data
+      gameObjectManager.updateBuffer(frameIndex);
 
       // render
       renderer.beginSwapChainRenderPass(commandBuffer);
@@ -122,28 +144,28 @@ void App::run() {
 void App::loadGameObjects() {
   std::shared_ptr<Model> model =
       Model::createModelFromFile(device, "models/bunny.obj");
-  auto bunny = OceanGameObject::createGameObject();
+  auto& bunny = gameObjectManager.createGameObject();
     bunny.model = model;
     bunny.transform.translation = {-.5f, .5f, 0.f};
     bunny.transform.scale = {.5f, .5f, .5f};
     // Pi = atan(1)*4
     bunny.transform.rotation = {0.0f, atan(1)*4,  atan(1)*4};
-  gameObjects.emplace(bunny.getId(), std::move(bunny));
 
   model = Model::createModelFromFile(device, "models/dragon.obj");
-  auto dragon = OceanGameObject::createGameObject();
+  auto& dragon = gameObjectManager.createGameObject();
   dragon.model = model;
   dragon.transform.translation = {.5f, .2f, 0.f};
   dragon.transform.scale = {1.f, 1.f, 1.f};
   dragon.transform.rotation = {PI, -PI/2, 0.0f};
-  gameObjects.emplace(dragon.getId(), std::move(dragon));
 
   model = Model::createModelFromFile(device, "models/quad.obj");
-  auto floor = OceanGameObject::createGameObject();
+  std::shared_ptr<Texture> marbleTexture =
+          Texture::createTextureFromFile(device, "../textures/floor.png");
+  auto& floor = gameObjectManager.createGameObject();
   floor.model = model;
+  floor.diffuseMap = marbleTexture;
   floor.transform.translation = {0.f, .5f, 0.f};
   floor.transform.scale = {6.f, 1.f, 6.f};
-  gameObjects.emplace(floor.getId(), std::move(floor));
 
   std::vector<glm::vec3> lightColors{
       {2.f, .2f, .2f},
@@ -155,14 +177,13 @@ void App::loadGameObjects() {
   };
 
   for (int i = 0; i < lightColors.size(); i++) {
-    auto pointLight = OceanGameObject::makePointLight(0.5f);
+    auto& pointLight = gameObjectManager.makePointLight(1.0f);
     pointLight.color = lightColors[i];
     auto rotateLight = glm::rotate(
         glm::mat4(1.f),
         (i * glm::two_pi<float>()) / lightColors.size(),
         {0.f, -1.f, 0.f});
     pointLight.transform.translation = glm::vec3(rotateLight * glm::vec4(-1.f, -1.f, -1.f, 1.f));
-    gameObjects.emplace(pointLight.getId(), std::move(pointLight));
   }
 }
 

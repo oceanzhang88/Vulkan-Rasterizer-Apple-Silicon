@@ -2,6 +2,7 @@
 
 #include "camera.hpp"
 #include "game_object.hpp"
+#include "vulkan/descriptors.hpp"
 
 // lib
 #include <vulkan/vulkan.h>
@@ -30,6 +31,7 @@ struct FrameInfo {
   VkCommandBuffer commandBuffer;
   Camera &camera;
   VkDescriptorSet globalDescriptorSet;
-  OceanGameObject::Map &gameObjects;
+  OceanDescriptorPool &frameDescriptorPool;  // pool of descriptors that is cleared each frame
+  GameObject::Map &gameObjects;
 };
 }  // namespace Ocean

@@ -5,6 +5,7 @@
 #include "frame_info.hpp"
 #include "game_object.hpp"
 #include "vulkan/pipeline.hpp"
+#include "vulkan/descriptors.hpp"
 
 // std
 #include <memory>
@@ -30,5 +31,7 @@ class SimpleRenderSystem {
 
   std::unique_ptr<Pipeline> pipeline;
   VkPipelineLayout pipelineLayout;
+
+  std::unique_ptr<DescriptorSetLayout> renderSystemLayout;
 };
 }  // namespace Ocean
