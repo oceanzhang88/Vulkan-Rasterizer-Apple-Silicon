@@ -10,7 +10,7 @@ This C++ project is to build a modern rasterization pipeline around the Vulkan g
 Modern Vulkan Graphics API is important in many ways.
 This project uses Vulkan to build a rasterization pipeline on Apple Silicon M1/2 chip.
 
-Rasterizer incudes: projective camera, shader loading and parsing, Vulkan pipeline components: Device, Swap Chain, Command Buffer, Descriptor, Push Constant, loading obj models, multi-point Lighting, alpha blending and more.
+Rasterizer incudes: projective camera, shader loading and parsing, texture, Vulkan pipeline components: Device, Swap Chain, Command Buffer, Descriptor, Push Constant, loading obj models, multi-point Lighting, alpha blending and more.
 Meanwhile, you can move the camera around using keyboard keys.
 
 ***NOTE:*** Lighting pipeline architecture choice (Forward/Deferred/Tile-based Forward/Tile-based Deferred) is how we orchestrate Vulkan API not a built-in part of Vulkan or any other Graphics APIs.
@@ -27,7 +27,7 @@ Tile-based Forward is proposed by a paper with a fancy name:
 
 ## Demo
  
-https://user-images.githubusercontent.com/25319668/218864367-92a76afc-626b-4aa5-8d90-f4a6bf27d9d2.mp4
+https://user-images.githubusercontent.com/25319668/224529664-1a15a924-b302-403b-b52c-5e5201144ef7.mp4
 
 ## Requirements
 
