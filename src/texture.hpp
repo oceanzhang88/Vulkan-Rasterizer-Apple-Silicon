@@ -12,10 +12,10 @@
 namespace Ocean {
     class Texture {
     public:
-        Texture(OceanDevice &device, const std::string &textureFilepath);
+        Texture(Device &device, const std::string &textureFilepath);
 
         Texture(
-                OceanDevice &device,
+                Device &device,
                 VkFormat format,
                 VkExtent3D extent,
                 VkImageUsageFlags usage,
@@ -50,7 +50,7 @@ namespace Ocean {
                 VkCommandBuffer commandBuffer, VkImageLayout oldLayout, VkImageLayout newLayout);
 
         static std::unique_ptr<Texture> createTextureFromFile(
-                OceanDevice &device, const std::string &filepath);
+                Device &device, const std::string &filepath);
 
     private:
         void createTextureImage(const std::string &filepath);
@@ -61,7 +61,7 @@ namespace Ocean {
 
         VkDescriptorImageInfo mDescriptor{};
 
-        OceanDevice &mDevice;
+        Device &mDevice;
         VkImage mTextureImage = nullptr;
         VkDeviceMemory mTextureImageMemory = nullptr;
         VkImageView mTextureImageView = nullptr;

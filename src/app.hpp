@@ -15,29 +15,23 @@ namespace Ocean {
     public:
         static constexpr int WIDTH = 800;
         static constexpr int HEIGHT = 600;
+        static constexpr float PI = 3.1415926;
 
         App();
-
         ~App();
-
         App(const App &) = delete;
-
         App &operator=(const App &) = delete;
-
         void run();
 
     private:
-        static constexpr float PI = 3.1415926;
+        Window window;
+        Device device;
+        OceanRenderer renderer;
+        // order of declarations matters
+        std::unique_ptr<DescriptorPool> globalPool;
+        std::vector<std::unique_ptr<DescriptorPool>> framePools;
+        GameObjectManager gameObjectManager;
 
         void loadGameObjects();
-
-        OceanWindow window{WIDTH, HEIGHT, "Vulkan MacOS M1"};
-        OceanDevice device{window};
-        OceanRenderer renderer{window, device};
-
-        // note: order of declarations matters
-        std::unique_ptr<OceanDescriptorPool> globalPool{};
-        std::vector<std::unique_ptr<OceanDescriptorPool>> framePools;
-        GameObjectManager gameObjectManager{device};
     };
 }  // namespace lve

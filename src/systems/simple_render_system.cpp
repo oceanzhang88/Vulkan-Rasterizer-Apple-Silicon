@@ -20,7 +20,7 @@ namespace Ocean {
     };
 
     SimpleRenderSystem::SimpleRenderSystem(
-            OceanDevice &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout)
+            Device &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout)
             : device{device} {
         createPipelineLayout(globalSetLayout);
         createPipeline(renderPass);

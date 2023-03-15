@@ -22,16 +22,22 @@
 
 namespace Ocean {
 
-    App::App() {
+    App::App():
+    window{WIDTH, HEIGHT, "Vulkan MacOS M1"},
+    device{window},
+    renderer{window, device},
+    gameObjectManager{device},
+    globalPool{}
+    {
         globalPool =
-                OceanDescriptorPool::Builder(device)
-                        .setMaxSets(OceanSwapChain::MAX_FRAMES_IN_FLIGHT)
-                        .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, OceanSwapChain::MAX_FRAMES_IN_FLIGHT)
+                DescriptorPool::Builder(device)
+                        .setMaxSets(SwapChain::MAX_FRAMES_IN_FLIGHT)
+                        .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, SwapChain::MAX_FRAMES_IN_FLIGHT)
                         .build();
 
         // build frame descriptor pools
-        framePools.resize(OceanSwapChain::MAX_FRAMES_IN_FLIGHT);
-        auto framePoolBuilder = OceanDescriptorPool::Builder(device)
+        framePools.resize(SwapChain::MAX_FRAMES_IN_FLIGHT);
+        auto framePoolBuilder = DescriptorPool::Builder(device)
                 .setMaxSets(1000)
                 .addPoolSize(VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000)
                 .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000)
@@ -46,7 +52,7 @@ namespace Ocean {
     App::~App() = default;
 
     void App::run() {
-        std::vector<std::unique_ptr<OceanBuffer>> uboBuffers(OceanSwapChain::MAX_FRAMES_IN_FLIGHT);
+        std::vector<std::unique_ptr<OceanBuffer>> uboBuffers(SwapChain::MAX_FRAMES_IN_FLIGHT);
         for (auto &uboBuffer: uboBuffers) {
             uboBuffer = std::make_unique<OceanBuffer>(
                     device,
@@ -62,7 +68,7 @@ namespace Ocean {
                         .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
                         .build();
 
-        std::vector<VkDescriptorSet> globalDescriptorSets(OceanSwapChain::MAX_FRAMES_IN_FLIGHT);
+        std::vector<VkDescriptorSet> globalDescriptorSets(SwapChain::MAX_FRAMES_IN_FLIGHT);
         for (int i = 0; i < globalDescriptorSets.size(); i++) {
             auto bufferInfo = uboBuffers[i]->descriptorInfo();
             DescriptorWriter(*globalSetLayout, *globalPool)

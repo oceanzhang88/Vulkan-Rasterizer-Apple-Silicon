@@ -30,7 +30,7 @@ namespace Ocean {
 // *************** Descriptor Set Layout *********************
 
     DescriptorSetLayout::DescriptorSetLayout(
-            OceanDevice &device, const std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> &bindings)
+            Device &device, const std::unordered_map<uint32_t, VkDescriptorSetLayoutBinding> &bindings)
             : device{device}, bindings{bindings} {
         std::vector<VkDescriptorSetLayoutBinding> setLayoutBindings{};
         setLayoutBindings.reserve(bindings.size());
@@ -58,31 +58,31 @@ namespace Ocean {
 
 // *************** Descriptor Pool Builder *********************
 
-    OceanDescriptorPool::Builder &OceanDescriptorPool::Builder::addPoolSize(
+    DescriptorPool::Builder &DescriptorPool::Builder::addPoolSize(
             VkDescriptorType descriptorType, uint32_t count) {
         poolSizes.push_back({descriptorType, count});
         return *this;
     }
 
-    OceanDescriptorPool::Builder &OceanDescriptorPool::Builder::setPoolFlags(
+    DescriptorPool::Builder &DescriptorPool::Builder::setPoolFlags(
             VkDescriptorPoolCreateFlags flags) {
         poolFlags = flags;
         return *this;
     }
 
-    OceanDescriptorPool::Builder &OceanDescriptorPool::Builder::setMaxSets(uint32_t count) {
+    DescriptorPool::Builder &DescriptorPool::Builder::setMaxSets(uint32_t count) {
         maxSets = count;
         return *this;
     }
 
-    std::unique_ptr<OceanDescriptorPool> OceanDescriptorPool::Builder::build() const {
-        return std::make_unique<OceanDescriptorPool>(device, maxSets, poolFlags, poolSizes);
+    std::unique_ptr<DescriptorPool> DescriptorPool::Builder::build() const {
+        return std::make_unique<DescriptorPool>(device, maxSets, poolFlags, poolSizes);
     }
 
 // *************** Descriptor Pool *********************
 
-    OceanDescriptorPool::OceanDescriptorPool(
-            OceanDevice &device,
+    DescriptorPool::DescriptorPool(
+            Device &device,
             uint32_t maxSets,
             VkDescriptorPoolCreateFlags poolFlags,
             const std::vector<VkDescriptorPoolSize> &poolSizes)
@@ -100,11 +100,11 @@ namespace Ocean {
         }
     }
 
-    OceanDescriptorPool::~OceanDescriptorPool() {
+    DescriptorPool::~DescriptorPool() {
         vkDestroyDescriptorPool(oceanDevice.device(), descriptorPool, nullptr);
     }
 
-    bool OceanDescriptorPool::allocateDescriptor(
+    bool DescriptorPool::allocateDescriptor(
             const VkDescriptorSetLayout descriptorSetLayout, VkDescriptorSet &descriptor) const {
         VkDescriptorSetAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
@@ -120,7 +120,7 @@ namespace Ocean {
         return true;
     }
 
-    void OceanDescriptorPool::freeDescriptors(std::vector<VkDescriptorSet> &descriptors) const {
+    void DescriptorPool::freeDescriptors(std::vector<VkDescriptorSet> &descriptors) const {
         vkFreeDescriptorSets(
                 oceanDevice.device(),
                 descriptorPool,
@@ -128,13 +128,13 @@ namespace Ocean {
                 descriptors.data());
     }
 
-    void OceanDescriptorPool::resetPool() {
+    void DescriptorPool::resetPool() {
         vkResetDescriptorPool(oceanDevice.device(), descriptorPool, 0);
     }
 
 // *************** Descriptor Writer *********************
 
-    DescriptorWriter::DescriptorWriter(DescriptorSetLayout &setLayout, OceanDescriptorPool &pool)
+    DescriptorWriter::DescriptorWriter(DescriptorSetLayout &setLayout, DescriptorPool &pool)
             : setLayout{setLayout}, pool{pool} {}
 
     DescriptorWriter &DescriptorWriter::writeBuffer(

@@ -7,7 +7,7 @@
 
 namespace Ocean {
 
-    OceanRenderer::OceanRenderer(OceanWindow &window, OceanDevice &device)
+    OceanRenderer::OceanRenderer(Window &window, Device &device)
             : window{window}, device{device} {
         recreateSwapChain();
         createCommandBuffers();
@@ -24,10 +24,10 @@ namespace Ocean {
         vkDeviceWaitIdle(device.device());
 
         if (swapChain == nullptr) {
-            swapChain = std::make_unique<OceanSwapChain>(device, extent);
+            swapChain = std::make_unique<SwapChain>(device, extent);
         } else {
-            std::shared_ptr<OceanSwapChain> oldSwapChain = std::move(swapChain);
-            swapChain = std::make_unique<OceanSwapChain>(device, extent, oldSwapChain);
+            std::shared_ptr<SwapChain> oldSwapChain = std::move(swapChain);
+            swapChain = std::make_unique<SwapChain>(device, extent, oldSwapChain);
 
             if (!oldSwapChain->compareSwapFormats(*swapChain)) {
                 throw std::runtime_error("Swap chain image(or depth) format has changed!");
@@ -36,7 +36,7 @@ namespace Ocean {
     }
 
     void OceanRenderer::createCommandBuffers() {
-        commandBuffers.resize(OceanSwapChain::MAX_FRAMES_IN_FLIGHT);
+        commandBuffers.resize(SwapChain::MAX_FRAMES_IN_FLIGHT);
 
         VkCommandBufferAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -101,7 +101,7 @@ namespace Ocean {
         }
 
         isFrameStarted = false;
-        currentFrameIndex = (currentFrameIndex + 1) % OceanSwapChain::MAX_FRAMES_IN_FLIGHT;
+        currentFrameIndex = (currentFrameIndex + 1) % SwapChain::MAX_FRAMES_IN_FLIGHT;
     }
 
     void OceanRenderer::beginSwapChainRenderPass(VkCommandBuffer commandBuffer) {

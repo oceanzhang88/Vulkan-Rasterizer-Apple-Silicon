@@ -12,7 +12,7 @@
 namespace Ocean {
     class OceanRenderer {
     public:
-        OceanRenderer(OceanWindow &window, OceanDevice &device);
+        OceanRenderer(Window &window, Device &device);
 
         ~OceanRenderer();
 
@@ -51,9 +51,9 @@ namespace Ocean {
 
         void recreateSwapChain();
 
-        OceanWindow &window;
-        OceanDevice &device;
-        std::unique_ptr<OceanSwapChain> swapChain;
+        Window &window;
+        Device &device;
+        std::unique_ptr<SwapChain> swapChain;
         std::vector<VkCommandBuffer> commandBuffers;
 
         uint32_t currentImageIndex{};

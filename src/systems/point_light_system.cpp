@@ -22,7 +22,7 @@ namespace Ocean {
     };
 
     PointLightSystem::PointLightSystem(
-            OceanDevice &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout)
+            Device &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout)
             : oceanDevice{device} {
         createPipelineLayout(globalSetLayout);
         createPipeline(renderPass);

@@ -23,7 +23,7 @@ namespace Ocean {
         bool isComplete() const { return graphicsFamilyHasValue && presentFamilyHasValue; }
     };
 
-    class OceanDevice {
+    class Device {
     public:
 #ifdef NDEBUG
         const bool enableValidationLayers = false;
@@ -31,18 +31,18 @@ namespace Ocean {
         const bool enableValidationLayers = true;
 #endif
 
-        explicit OceanDevice(OceanWindow &window);
+        explicit Device(Window &window);
 
-        ~OceanDevice();
+        ~Device();
 
         // Not copyable or movable
-        OceanDevice(const OceanDevice &) = delete;
+        Device(const Device &) = delete;
 
-        OceanDevice &operator=(const OceanDevice &) = delete;
+        Device &operator=(const Device &) = delete;
 
-        OceanDevice(OceanDevice &&) = delete;
+        Device(Device &&) = delete;
 
-        OceanDevice &operator=(OceanDevice &&) = delete;
+        Device &operator=(Device &&) = delete;
 
         VkCommandPool getCommandPool() { return commandPool; }
 
@@ -129,7 +129,7 @@ namespace Ocean {
         VkInstance instance{};
         VkDebugUtilsMessengerEXT debugMessenger{};
         VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
-        OceanWindow &window;
+        Window &window;
         VkCommandPool commandPool{};
 
         VkDevice device_{};

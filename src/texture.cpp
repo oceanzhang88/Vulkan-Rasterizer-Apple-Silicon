@@ -10,7 +10,7 @@
 #include <stdexcept>
 
 namespace Ocean {
-    Texture::Texture(OceanDevice &device, const std::string &textureFilepath) : mDevice{device} {
+    Texture::Texture(Device &device, const std::string &textureFilepath) : mDevice{device} {
         createTextureImage(textureFilepath);
         createTextureImageView(VK_IMAGE_VIEW_TYPE_2D);
         createTextureSampler();
@@ -18,7 +18,7 @@ namespace Ocean {
     }
 
     Texture::Texture(
-            OceanDevice &device,
+            Device &device,
             VkFormat format,
             VkExtent3D extent,
             VkImageUsageFlags usage,
@@ -110,7 +110,7 @@ namespace Ocean {
     }
 
     std::unique_ptr<Texture> Texture::createTextureFromFile(
-            OceanDevice &device, const std::string &filepath) {
+            Device &device, const std::string &filepath) {
         return std::make_unique<Texture>(device, filepath);
     }
 

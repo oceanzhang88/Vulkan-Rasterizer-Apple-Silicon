@@ -75,7 +75,7 @@ namespace Ocean {
     public:
         static constexpr int MAX_GAME_OBJECTS = 1000;
 
-        explicit GameObjectManager(OceanDevice &device);
+        explicit GameObjectManager(Device &device);
 
         GameObjectManager(const GameObjectManager &) = delete;
 
@@ -105,7 +105,7 @@ namespace Ocean {
         void updateBuffer(int frameIndex);
 
         GameObject::Map gameObjects{};
-        std::vector<std::unique_ptr<OceanBuffer>> uboBuffers{OceanSwapChain::MAX_FRAMES_IN_FLIGHT};
+        std::vector<std::unique_ptr<OceanBuffer>> uboBuffers{SwapChain::MAX_FRAMES_IN_FLIGHT};
 
     private:
         GameObject::id_t currentId = 0;

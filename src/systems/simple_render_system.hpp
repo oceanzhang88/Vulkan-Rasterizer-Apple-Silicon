@@ -15,7 +15,7 @@ namespace Ocean {
     class SimpleRenderSystem {
     public:
         SimpleRenderSystem(
-                OceanDevice &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
+                Device &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
 
         ~SimpleRenderSystem();
 
@@ -30,7 +30,7 @@ namespace Ocean {
 
         void createPipeline(VkRenderPass renderPass);
 
-        OceanDevice &device;
+        Device &device;
 
         std::unique_ptr<Pipeline> pipeline;
         VkPipelineLayout pipelineLayout{};

@@ -47,7 +47,7 @@ namespace Ocean {
     }
 
 // class member functions
-    OceanDevice::OceanDevice(OceanWindow &window) : window{window} {
+    Device::Device(Window &window) : window{window} {
         createInstance();
         setupDebugMessenger();
         createSurface();
@@ -56,7 +56,7 @@ namespace Ocean {
         createCommandPool();
     }
 
-    OceanDevice::~OceanDevice() {
+    Device::~Device() {
         vkDestroyCommandPool(device_, commandPool, nullptr);
         vkDestroyDevice(device_, nullptr);
 
@@ -68,7 +68,7 @@ namespace Ocean {
         vkDestroyInstance(instance, nullptr);
     }
 
-    void OceanDevice::createInstance() {
+    void Device::createInstance() {
         if (enableValidationLayers && !checkValidationLayerSupport()) {
             throw std::runtime_error("validation layers requested, but not available!");
         }
@@ -109,7 +109,7 @@ namespace Ocean {
         hasGflwRequiredInstanceExtensions();
     }
 
-    void OceanDevice::pickPhysicalDevice() {
+    void Device::pickPhysicalDevice() {
         uint32_t deviceCount = 0;
         vkEnumeratePhysicalDevices(instance, &deviceCount, nullptr);
         if (deviceCount == 0) {
@@ -134,7 +134,7 @@ namespace Ocean {
         std::cout << "physical device: " << properties.deviceName << std::endl;
     }
 
-    void OceanDevice::createLogicalDevice() {
+    void Device::createLogicalDevice() {
         QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
 
         std::vector<VkDeviceQueueCreateInfo> queueCreateInfos;
@@ -180,7 +180,7 @@ namespace Ocean {
         vkGetDeviceQueue(device_, indices.presentFamily, 0, &presentQueue_);
     }
 
-    void OceanDevice::createCommandPool() {
+    void Device::createCommandPool() {
         QueueFamilyIndices queueFamilyIndices = findPhysicalQueueFamilies();
 
         VkCommandPoolCreateInfo poolInfo = {};
@@ -194,9 +194,9 @@ namespace Ocean {
         }
     }
 
-    void OceanDevice::createSurface() { window.createWindowSurface(instance, &surface_); }
+    void Device::createSurface() { window.createWindowSurface(instance, &surface_); }
 
-    bool OceanDevice::isDeviceSuitable(VkPhysicalDevice device) {
+    bool Device::isDeviceSuitable(VkPhysicalDevice device) {
         QueueFamilyIndices indices = findQueueFamilies(device);
 
         bool extensionsSupported = checkDeviceExtensionSupport(device);
@@ -214,7 +214,7 @@ namespace Ocean {
                supportedFeatures.samplerAnisotropy;
     }
 
-    void OceanDevice::populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo) {
+    void Device::populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT &createInfo) {
         createInfo = {};
         createInfo.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT;
         createInfo.messageSeverity = VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT |
@@ -226,7 +226,7 @@ namespace Ocean {
         createInfo.pUserData = nullptr;  // Optional
     }
 
-    void OceanDevice::setupDebugMessenger() {
+    void Device::setupDebugMessenger() {
         if (!enableValidationLayers) return;
         VkDebugUtilsMessengerCreateInfoEXT createInfo;
         populateDebugMessengerCreateInfo(createInfo);
@@ -235,7 +235,7 @@ namespace Ocean {
         }
     }
 
-    bool OceanDevice::checkValidationLayerSupport() {
+    bool Device::checkValidationLayerSupport() {
         uint32_t layerCount;
         vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
@@ -260,7 +260,7 @@ namespace Ocean {
         return true;
     }
 
-    std::vector<const char *> OceanDevice::getRequiredExtensions() const {
+    std::vector<const char *> Device::getRequiredExtensions() const {
         uint32_t glfwExtensionCount = 0;
         const char **glfwExtensions;
         glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
@@ -276,7 +276,7 @@ namespace Ocean {
         return extensions;
     }
 
-    void OceanDevice::hasGflwRequiredInstanceExtensions() {
+    void Device::hasGflwRequiredInstanceExtensions() {
         uint32_t extensionCount = 0;
         vkEnumerateInstanceExtensionProperties(nullptr, &extensionCount, nullptr);
         std::vector<VkExtensionProperties> extensions(extensionCount);
@@ -299,7 +299,7 @@ namespace Ocean {
         }
     }
 
-    bool OceanDevice::checkDeviceExtensionSupport(VkPhysicalDevice device) {
+    bool Device::checkDeviceExtensionSupport(VkPhysicalDevice device) {
         uint32_t extensionCount;
         vkEnumerateDeviceExtensionProperties(device, nullptr, &extensionCount, nullptr);
 
@@ -319,7 +319,7 @@ namespace Ocean {
         return requiredExtensions.empty();
     }
 
-    QueueFamilyIndices OceanDevice::findQueueFamilies(VkPhysicalDevice device) {
+    QueueFamilyIndices Device::findQueueFamilies(VkPhysicalDevice device) {
         QueueFamilyIndices indices;
 
         uint32_t queueFamilyCount = 0;
@@ -350,7 +350,7 @@ namespace Ocean {
         return indices;
     }
 
-    SwapChainSupportDetails OceanDevice::querySwapChainSupport(VkPhysicalDevice device) {
+    SwapChainSupportDetails Device::querySwapChainSupport(VkPhysicalDevice device) {
         SwapChainSupportDetails details;
         vkGetPhysicalDeviceSurfaceCapabilitiesKHR(device, surface_, &details.capabilities);
 
@@ -376,7 +376,7 @@ namespace Ocean {
         return details;
     }
 
-    VkFormat OceanDevice::findSupportedFormat(
+    VkFormat Device::findSupportedFormat(
             const std::vector<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features) {
         for (VkFormat format: candidates) {
             VkFormatProperties props;
@@ -392,7 +392,7 @@ namespace Ocean {
         throw std::runtime_error("failed to find supported format!");
     }
 
-    uint32_t OceanDevice::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) {
+    uint32_t Device::findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties) {
         VkPhysicalDeviceMemoryProperties memProperties;
         vkGetPhysicalDeviceMemoryProperties(physicalDevice, &memProperties);
         for (uint32_t i = 0; i < memProperties.memoryTypeCount; i++) {
@@ -405,7 +405,7 @@ namespace Ocean {
         throw std::runtime_error("failed to find suitable memory type!");
     }
 
-    void OceanDevice::createBuffer(
+    void Device::createBuffer(
             VkDeviceSize size,
             VkBufferUsageFlags usage,
             VkMemoryPropertyFlags properties,
@@ -436,7 +436,7 @@ namespace Ocean {
         vkBindBufferMemory(device_, buffer, bufferMemory, 0);
     }
 
-    VkCommandBuffer OceanDevice::beginSingleTimeCommands() {
+    VkCommandBuffer Device::beginSingleTimeCommands() {
         VkCommandBufferAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
         allocInfo.level = VK_COMMAND_BUFFER_LEVEL_PRIMARY;
@@ -454,7 +454,7 @@ namespace Ocean {
         return commandBuffer;
     }
 
-    void OceanDevice::endSingleTimeCommands(VkCommandBuffer commandBuffer) {
+    void Device::endSingleTimeCommands(VkCommandBuffer commandBuffer) {
         vkEndCommandBuffer(commandBuffer);
 
         VkSubmitInfo submitInfo{};
@@ -468,7 +468,7 @@ namespace Ocean {
         vkFreeCommandBuffers(device_, commandPool, 1, &commandBuffer);
     }
 
-    void OceanDevice::copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size) {
+    void Device::copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size) {
         VkCommandBuffer commandBuffer = beginSingleTimeCommands();
 
         VkBufferCopy copyRegion{};
@@ -480,7 +480,7 @@ namespace Ocean {
         endSingleTimeCommands(commandBuffer);
     }
 
-    void OceanDevice::copyBufferToImage(
+    void Device::copyBufferToImage(
             VkBuffer buffer, VkImage image, uint32_t width, uint32_t height, uint32_t layerCount) {
         VkCommandBuffer commandBuffer = beginSingleTimeCommands();
 
@@ -507,7 +507,7 @@ namespace Ocean {
         endSingleTimeCommands(commandBuffer);
     }
 
-    void OceanDevice::createImageWithInfo(
+    void Device::createImageWithInfo(
             const VkImageCreateInfo &imageInfo,
             VkMemoryPropertyFlags properties,
             VkImage &image,
@@ -533,7 +533,7 @@ namespace Ocean {
         }
     }
 
-    void OceanDevice::transitionImageLayout(
+    void Device::transitionImageLayout(
             VkImage image,
             VkFormat format,
             VkImageLayout oldLayout,

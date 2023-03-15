@@ -39,7 +39,7 @@ namespace Ocean {
             void loadModel(const std::string &filepath);
         };
 
-        Model(OceanDevice &device, const Model::Builder &builder);
+        Model(Device &device, const Model::Builder &builder);
 
         ~Model();
 
@@ -48,7 +48,7 @@ namespace Ocean {
         Model &operator=(const Model &) = delete;
 
         static std::unique_ptr<Model> createModelFromFile(
-                OceanDevice &device, const std::string &filepath);
+                Device &device, const std::string &filepath);
 
         void bind(VkCommandBuffer commandBuffer);
 
@@ -59,7 +59,7 @@ namespace Ocean {
 
         void createIndexBuffers(const std::vector<uint32_t> &indices);
 
-        OceanDevice &device;
+        Device &device;
 
         std::unique_ptr<OceanBuffer> vertexBuffer;
         uint32_t vertexCount{};

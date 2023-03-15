@@ -31,7 +31,7 @@ namespace Ocean {
         VkCommandBuffer commandBuffer;
         Camera &camera;
         VkDescriptorSet globalDescriptorSet;
-        OceanDescriptorPool &frameDescriptorPool;  // pool of descriptors that is cleared each frame
+        DescriptorPool &frameDescriptorPool;  // pool of descriptors that is cleared each frame
         GameObject::Map &gameObjects;
     };
 }  // namespace Ocean

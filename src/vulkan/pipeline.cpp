@@ -15,7 +15,7 @@
 namespace Ocean {
 
     Pipeline::Pipeline(
-            OceanDevice &device,
+            Device &device,
             const std::string &vertFilepath,
             const std::string &fragFilepath,
             const PipelineConfigInfo &configInfo)

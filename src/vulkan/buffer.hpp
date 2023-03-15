@@ -7,7 +7,7 @@ namespace Ocean {
     class OceanBuffer {
     public:
         OceanBuffer(
-                OceanDevice &device,
+                Device &device,
                 VkDeviceSize instanceSize,
                 uint32_t instanceCount,
                 VkBufferUsageFlags usageFlags,
@@ -59,7 +59,7 @@ namespace Ocean {
     private:
         static VkDeviceSize getAlignment(VkDeviceSize instanceSize, VkDeviceSize minOffsetAlignment);
 
-        OceanDevice &device;
+        Device &device;
         void *mapped = nullptr;
         VkBuffer buffer = VK_NULL_HANDLE;
         VkDeviceMemory memory = VK_NULL_HANDLE;

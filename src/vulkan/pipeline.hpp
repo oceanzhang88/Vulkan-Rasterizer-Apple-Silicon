@@ -34,7 +34,7 @@ namespace Ocean {
     class Pipeline {
     public:
         Pipeline(
-                OceanDevice &device,
+                Device &device,
                 const std::string &vertFilepath,
                 const std::string &fragFilepath,
                 const PipelineConfigInfo &configInfo);
@@ -61,7 +61,7 @@ namespace Ocean {
 
         void createShaderModule(const std::vector<char> &code, VkShaderModule *shaderModule);
 
-        OceanDevice &device;
+        Device &device;
         VkPipeline graphicsPipeline{};
         VkShaderModule vertShaderModule{};
         VkShaderModule fragShaderModule{};

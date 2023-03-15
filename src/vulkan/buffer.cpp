@@ -30,7 +30,7 @@ namespace Ocean {
     }
 
     OceanBuffer::OceanBuffer(
-            OceanDevice &device,
+            Device &device,
             VkDeviceSize instanceSize,
             uint32_t instanceCount,
             VkBufferUsageFlags usageFlags,

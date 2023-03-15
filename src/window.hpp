@@ -8,15 +8,15 @@
 
 namespace Ocean {
 
-    class OceanWindow {
+    class Window {
     public:
-        OceanWindow(int w, int h, std::string name);
+        Window(int w, int h, std::string name);
 
-        ~OceanWindow();
+        ~Window();
 
-        OceanWindow(const OceanWindow &) = delete;
+        Window(const Window &) = delete;
 
-        OceanWindow &operator=(const OceanWindow &) = delete;
+        Window &operator=(const Window &) = delete;
 
         bool shouldClose() { return glfwWindowShouldClose(window); }
 

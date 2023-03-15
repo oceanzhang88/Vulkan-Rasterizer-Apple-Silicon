@@ -12,20 +12,20 @@
 
 namespace Ocean {
 
-    class OceanSwapChain {
+    class SwapChain {
     public:
         static constexpr int MAX_FRAMES_IN_FLIGHT = 2;
 
-        OceanSwapChain(OceanDevice &deviceRef, VkExtent2D windowExtent);
+        SwapChain(Device &deviceRef, VkExtent2D windowExtent);
 
-        OceanSwapChain(
-                OceanDevice &deviceRef, VkExtent2D windowExtent, std::shared_ptr<OceanSwapChain> previous);
+        SwapChain(
+                Device &deviceRef, VkExtent2D windowExtent, std::shared_ptr<SwapChain> previous);
 
-        ~OceanSwapChain();
+        ~SwapChain();
 
-        OceanSwapChain(const OceanSwapChain &) = delete;
+        SwapChain(const SwapChain &) = delete;
 
-        OceanSwapChain &operator=(const OceanSwapChain &) = delete;
+        SwapChain &operator=(const SwapChain &) = delete;
 
         VkFramebuffer getFrameBuffer(int index) { return swapChainFramebuffers[index]; }
 
@@ -53,7 +53,7 @@ namespace Ocean {
 
         VkResult submitCommandBuffers(const VkCommandBuffer *buffers, const uint32_t *imageIndex);
 
-        [[nodiscard]] bool compareSwapFormats(const OceanSwapChain &swapChain) const {
+        [[nodiscard]] bool compareSwapFormats(const SwapChain &swapChain) const {
             return swapChain.swapChainDepthFormat == swapChainDepthFormat &&
                    swapChain.swapChainImageFormat == swapChainImageFormat;
         }
@@ -95,11 +95,11 @@ namespace Ocean {
         std::vector<VkImage> swapChainImages;
         std::vector<VkImageView> swapChainImageViews;
 
-        OceanDevice &device;
+        Device &device;
         VkExtent2D windowExtent;
 
         VkSwapchainKHR swapChain{};
-        std::shared_ptr<OceanSwapChain> oldSwapChain;
+        std::shared_ptr<SwapChain> oldSwapChain;
 
         std::vector<VkSemaphore> imageAvailableSemaphores;
         std::vector<VkSemaphore> renderFinishedSemaphores;

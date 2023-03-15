@@ -77,7 +77,7 @@ namespace Ocean {
         return gameObj;
     }
 
-    GameObjectManager::GameObjectManager(OceanDevice &device) {
+    GameObjectManager::GameObjectManager(Device &device) {
         // including nonCoherentAtomSize allows us to flush a specific index at once
         int alignment = std::lcm(
                 device.properties.limits.nonCoherentAtomSize,

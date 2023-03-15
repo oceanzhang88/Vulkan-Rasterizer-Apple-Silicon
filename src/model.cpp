@@ -33,7 +33,7 @@ namespace std {
 
 namespace Ocean {
 
-    Model::Model(OceanDevice &device, const Model::Builder &builder) : device{device} {
+    Model::Model(Device &device, const Model::Builder &builder) : device{device} {
         createVertexBuffers(builder.vertices);
         createIndexBuffers(builder.indices);
     }
@@ -41,7 +41,7 @@ namespace Ocean {
     Model::~Model() = default;
 
     std::unique_ptr<Model> Model::createModelFromFile(
-            OceanDevice &device, const std::string &filepath) {
+            Device &device, const std::string &filepath) {
         Builder builder{};
         builder.loadModel(ENGINE_DIR + filepath);
         return std::make_unique<Model>(device, builder);

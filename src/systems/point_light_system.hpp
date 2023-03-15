@@ -14,7 +14,7 @@ namespace Ocean {
     class PointLightSystem {
     public:
         PointLightSystem(
-                OceanDevice &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
+                Device &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
 
         ~PointLightSystem();
 
@@ -31,7 +31,7 @@ namespace Ocean {
 
         void createPipeline(VkRenderPass renderPass);
 
-        OceanDevice &oceanDevice;
+        Device &oceanDevice;
 
         std::unique_ptr<Pipeline> pipeline;
         VkPipelineLayout pipelineLayout{};

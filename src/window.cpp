@@ -7,17 +7,17 @@
 
 namespace Ocean {
 
-    OceanWindow::OceanWindow(int w, int h, std::string name) : width{w}, height{h},
-                                                               windowName{std::move(std::move(name))} {
+    Window::Window(int w, int h, std::string name) : width{w}, height{h},
+                                                     windowName{std::move(std::move(name))} {
         initWindow();
     }
 
-    OceanWindow::~OceanWindow() {
+    Window::~Window() {
         glfwDestroyWindow(window);
         glfwTerminate();
     }
 
-    void OceanWindow::initWindow() {
+    void Window::initWindow() {
         glfwInit();
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
@@ -27,14 +27,14 @@ namespace Ocean {
         glfwSetFramebufferSizeCallback(window, framebufferResizeCallback);
     }
 
-    void OceanWindow::createWindowSurface(VkInstance instance, VkSurfaceKHR *surface) {
+    void Window::createWindowSurface(VkInstance instance, VkSurfaceKHR *surface) {
         if (glfwCreateWindowSurface(instance, window, nullptr, surface) != VK_SUCCESS) {
             throw std::runtime_error("failed to craete window surface");
         }
     }
 
-    void OceanWindow::framebufferResizeCallback(GLFWwindow *window, int width, int height) {
-        auto pwindow = reinterpret_cast<OceanWindow *>(glfwGetWindowUserPointer(window));
+    void Window::framebufferResizeCallback(GLFWwindow *window, int width, int height) {
+        auto pwindow = reinterpret_cast<Window *>(glfwGetWindowUserPointer(window));
         pwindow->framebufferResized = true;
         pwindow->width = width;
         pwindow->height = height;
