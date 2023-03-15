@@ -12,26 +12,29 @@
 #include <vector>
 
 namespace Ocean {
-class SimpleRenderSystem {
- public:
-  SimpleRenderSystem(
-      OceanDevice &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
-  ~SimpleRenderSystem();
+    class SimpleRenderSystem {
+    public:
+        SimpleRenderSystem(
+                OceanDevice &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
 
-  SimpleRenderSystem(const SimpleRenderSystem &) = delete;
-  SimpleRenderSystem &operator=(const SimpleRenderSystem &) = delete;
+        ~SimpleRenderSystem();
 
-  void renderGameObjects(FrameInfo &frameInfo);
+        SimpleRenderSystem(const SimpleRenderSystem &) = delete;
 
- private:
-  void createPipelineLayout(VkDescriptorSetLayout globalSetLayout);
-  void createPipeline(VkRenderPass renderPass);
+        SimpleRenderSystem &operator=(const SimpleRenderSystem &) = delete;
 
-  OceanDevice &device;
+        void renderGameObjects(FrameInfo &frameInfo);
 
-  std::unique_ptr<Pipeline> pipeline;
-  VkPipelineLayout pipelineLayout;
+    private:
+        void createPipelineLayout(VkDescriptorSetLayout globalSetLayout);
 
-  std::unique_ptr<DescriptorSetLayout> renderSystemLayout;
-};
+        void createPipeline(VkRenderPass renderPass);
+
+        OceanDevice &device;
+
+        std::unique_ptr<Pipeline> pipeline;
+        VkPipelineLayout pipelineLayout{};
+
+        std::unique_ptr<DescriptorSetLayout> renderSystemLayout;
+    };
 }  // namespace Ocean

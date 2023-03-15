@@ -11,25 +11,29 @@
 #include <vector>
 
 namespace Ocean {
-class PointLightSystem {
- public:
-  PointLightSystem(
-      OceanDevice &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
-  ~PointLightSystem();
+    class PointLightSystem {
+    public:
+        PointLightSystem(
+                OceanDevice &device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
 
-  PointLightSystem(const PointLightSystem &) = delete;
-  PointLightSystem &operator=(const PointLightSystem &) = delete;
+        ~PointLightSystem();
 
-  void update(FrameInfo &frameInfo, GlobalUbo &ubo);
-  void render(FrameInfo &frameInfo);
+        PointLightSystem(const PointLightSystem &) = delete;
 
- private:
-  void createPipelineLayout(VkDescriptorSetLayout globalSetLayout);
-  void createPipeline(VkRenderPass renderPass);
+        PointLightSystem &operator=(const PointLightSystem &) = delete;
 
-  OceanDevice &oceanDevice;
+        static void update(FrameInfo &frameInfo, GlobalUbo &ubo);
 
-  std::unique_ptr<Pipeline> pipeline;
-  VkPipelineLayout pipelineLayout;
-};
+        void render(FrameInfo &frameInfo);
+
+    private:
+        void createPipelineLayout(VkDescriptorSetLayout globalSetLayout);
+
+        void createPipeline(VkRenderPass renderPass);
+
+        OceanDevice &oceanDevice;
+
+        std::unique_ptr<Pipeline> pipeline;
+        VkPipelineLayout pipelineLayout{};
+    };
 }  // namespace Ocean

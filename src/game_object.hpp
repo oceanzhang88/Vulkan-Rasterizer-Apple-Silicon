@@ -13,96 +13,103 @@
 
 namespace Ocean {
 
-struct TransformComponent {
-  glm::vec3 translation{};
-  glm::vec3 scale{1.f, 1.f, 1.f};
-  glm::vec3 rotation{};
+    struct TransformComponent {
+        glm::vec3 translation{};
+        glm::vec3 scale{1.f, 1.f, 1.f};
+        glm::vec3 rotation{};
 
-  // Matrix corrsponds to Translate * Ry * Rx * Rz * Scale
-  // Rotations correspond to Tait-bryan angles of Y(1), X(2), Z(3)
-  // https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
-  glm::mat4 mat4();
+        // Matrix corrsponds to Translate * Ry * Rx * Rz * Scale
+        // Rotations correspond to Tait-bryan angles of Y(1), X(2), Z(3)
+        // https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+        glm::mat4 mat4() const;
 
-  glm::mat3 normalMatrix();
-};
+        glm::mat3 normalMatrix() const;
+    };
 
-struct PointLightComponent {
-  float lightIntensity = 1.0f;
-};
+    struct PointLightComponent {
+        float lightIntensity = 1.0f;
+    };
 
-struct GameObjectBufferData {
-  glm::mat4 modelMatrix{1.f};
-  glm::mat4 normalMatrix{1.f};
-};
+    struct GameObjectBufferData {
+        glm::mat4 modelMatrix{1.f};
+        glm::mat4 normalMatrix{1.f};
+    };
 
-class GameObjectManager;  // forward declare game object manager class
+    class GameObjectManager;  // forward declare game object manager class
 
-class GameObject {
- public:
-  using id_t = unsigned int;
-  using Map = std::unordered_map<id_t, GameObject>;
+    class GameObject {
+    public:
+        using id_t = unsigned int;
+        using Map = std::unordered_map<id_t, GameObject>;
 
-  GameObject(GameObject &&) = default;
-  GameObject(const GameObject &) = delete;
-  GameObject &operator=(const GameObject &) = delete;
-  GameObject &operator=(GameObject &&) = delete;
+        GameObject(GameObject &&) = default;
 
-  id_t getId() { return id; }
+        GameObject(const GameObject &) = delete;
 
-  VkDescriptorBufferInfo getBufferInfo(int frameIndex);
+        GameObject &operator=(const GameObject &) = delete;
 
-  glm::vec3 color{};
-  TransformComponent transform{};
+        GameObject &operator=(GameObject &&) = delete;
 
-  // Optional pointer components
-  std::shared_ptr<Model> model{};
-  std::shared_ptr<Texture> diffuseMap = nullptr;
-  std::unique_ptr<PointLightComponent> pointLight = nullptr;
+        id_t getId() const { return id; }
 
- private:
-  GameObject(id_t objId, const GameObjectManager &manager);
+        VkDescriptorBufferInfo getBufferInfo(int frameIndex);
 
-  id_t id;
-  const GameObjectManager &gameObjectManger;
+        glm::vec3 color{};
+        TransformComponent transform{};
 
-  friend class GameObjectManager;
-};
+        // Optional pointer components
+        std::shared_ptr<Model> model{};
+        std::shared_ptr<Texture> diffuseMap = nullptr;
+        std::unique_ptr<PointLightComponent> pointLight = nullptr;
 
-class GameObjectManager {
- public:
-  static constexpr int MAX_GAME_OBJECTS = 1000;
+    private:
+        GameObject(id_t objId, const GameObjectManager &manager);
 
-  GameObjectManager(OceanDevice &device);
-  GameObjectManager(const GameObjectManager &) = delete;
-  GameObjectManager &operator=(const GameObjectManager &) = delete;
-  GameObjectManager(GameObjectManager &&) = delete;
-  GameObjectManager &operator=(GameObjectManager &&) = delete;
+        id_t id;
+        const GameObjectManager &gameObjectManger;
 
-  GameObject &createGameObject() {
-    assert(currentId < MAX_GAME_OBJECTS && "Max game object count exceeded!");
-    auto gameObject = GameObject{currentId++, *this};
-    auto gameObjectId = gameObject.getId();
-    gameObject.diffuseMap = textureDefault;
-    gameObjects.emplace(gameObjectId, std::move(gameObject));
-    return gameObjects.at(gameObjectId);
-  }
+        friend class GameObjectManager;
+    };
 
-  GameObject &makePointLight(
-      float intensity = 10.f, float radius = 0.1f, glm::vec3 color = glm::vec3(1.f));
+    class GameObjectManager {
+    public:
+        static constexpr int MAX_GAME_OBJECTS = 1000;
 
-  VkDescriptorBufferInfo getBufferInfoForGameObject(
-          int frameIndex, GameObject::id_t gameObjectId) const {
-    return uboBuffers[frameIndex]->descriptorInfoForIndex(gameObjectId);
-  }
+        explicit GameObjectManager(OceanDevice &device);
 
-  void updateBuffer(int frameIndex);
+        GameObjectManager(const GameObjectManager &) = delete;
 
-  GameObject::Map gameObjects{};
-  std::vector<std::unique_ptr<OceanBuffer>> uboBuffers{OceanSwapChain::MAX_FRAMES_IN_FLIGHT};
+        GameObjectManager &operator=(const GameObjectManager &) = delete;
 
- private:
-  GameObject::id_t currentId = 0;
-  std::shared_ptr<Texture> textureDefault;
-};
+        GameObjectManager(GameObjectManager &&) = delete;
+
+        GameObjectManager &operator=(GameObjectManager &&) = delete;
+
+        GameObject &createGameObject() {
+            assert(currentId < MAX_GAME_OBJECTS && "Max game object count exceeded!");
+            auto gameObject = GameObject{currentId++, *this};
+            auto gameObjectId = gameObject.getId();
+            gameObject.diffuseMap = textureDefault;
+            gameObjects.emplace(gameObjectId, std::move(gameObject));
+            return gameObjects.at(gameObjectId);
+        }
+
+        GameObject &makePointLight(
+                float intensity = 10.f, float radius = 0.1f, glm::vec3 color = glm::vec3(1.f));
+
+        [[nodiscard]] VkDescriptorBufferInfo getBufferInfoForGameObject(
+                int frameIndex, GameObject::id_t gameObjectId) const {
+            return uboBuffers[frameIndex]->descriptorInfoForIndex(gameObjectId);
+        }
+
+        void updateBuffer(int frameIndex);
+
+        GameObject::Map gameObjects{};
+        std::vector<std::unique_ptr<OceanBuffer>> uboBuffers{OceanSwapChain::MAX_FRAMES_IN_FLIGHT};
+
+    private:
+        GameObject::id_t currentId = 0;
+        std::shared_ptr<Texture> textureDefault;
+    };
 
 }  // namespace lve

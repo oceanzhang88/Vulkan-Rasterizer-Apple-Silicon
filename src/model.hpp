@@ -6,6 +6,7 @@
 // libs
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
+
 #include <glm/glm.hpp>
 
 // std
@@ -13,53 +14,58 @@
 #include <vector>
 
 namespace Ocean {
-class Model {
- public:
-  struct Vertex {
-    glm::vec3 position{};
-    glm::vec3 color{};
-    glm::vec3 normal{};
-    glm::vec2 uv{};
+    class Model {
+    public:
+        struct Vertex {
+            glm::vec3 position{};
+            glm::vec3 color{};
+            glm::vec3 normal{};
+            glm::vec2 uv{};
 
-    static std::vector<VkVertexInputBindingDescription> getBindingDescriptions();
-    static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions();
+            static std::vector<VkVertexInputBindingDescription> getBindingDescriptions();
 
-    bool operator==(const Vertex &other) const {
-      return position == other.position && color == other.color && normal == other.normal &&
-             uv == other.uv;
-    }
-  };
+            static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions();
 
-  struct Builder {
-    std::vector<Vertex> vertices{};
-    std::vector<uint32_t> indices{};
+            bool operator==(const Vertex &other) const {
+                return position == other.position && color == other.color && normal == other.normal &&
+                       uv == other.uv;
+            }
+        };
 
-    void loadModel(const std::string &filepath);
-  };
+        struct Builder {
+            std::vector<Vertex> vertices{};
+            std::vector<uint32_t> indices{};
 
-  Model(OceanDevice &device, const Model::Builder &builder);
-  ~Model();
+            void loadModel(const std::string &filepath);
+        };
 
-  Model(const Model &) = delete;
-  Model &operator=(const Model &) = delete;
+        Model(OceanDevice &device, const Model::Builder &builder);
 
-  static std::unique_ptr<Model> createModelFromFile(
-      OceanDevice &device, const std::string &filepath);
+        ~Model();
 
-  void bind(VkCommandBuffer commandBuffer);
-  void draw(VkCommandBuffer commandBuffer);
+        Model(const Model &) = delete;
 
- private:
-  void createVertexBuffers(const std::vector<Vertex> &vertices);
-  void createIndexBuffers(const std::vector<uint32_t> &indices);
+        Model &operator=(const Model &) = delete;
 
-  OceanDevice &device;
+        static std::unique_ptr<Model> createModelFromFile(
+                OceanDevice &device, const std::string &filepath);
 
-  std::unique_ptr<OceanBuffer> vertexBuffer;
-  uint32_t vertexCount;
+        void bind(VkCommandBuffer commandBuffer);
 
-  bool hasIndexBuffer = false;
-  std::unique_ptr<OceanBuffer> indexBuffer;
-  uint32_t indexCount;
-};
+        void draw(VkCommandBuffer commandBuffer) const;
+
+    private:
+        void createVertexBuffers(const std::vector<Vertex> &vertices);
+
+        void createIndexBuffers(const std::vector<uint32_t> &indices);
+
+        OceanDevice &device;
+
+        std::unique_ptr<OceanBuffer> vertexBuffer;
+        uint32_t vertexCount{};
+
+        bool hasIndexBuffer = false;
+        std::unique_ptr<OceanBuffer> indexBuffer;
+        uint32_t indexCount{};
+    };
 }  // namespace Ocean
