@@ -55,3 +55,8 @@ cd build
 * W/A/S/D/E/Q to change the camera positions.
 
 * Arrow key up/left/right/down to rotate the camera.
+
+
+## Credits
+
+Thanks to the wonderful tutorial by [Brendan](https://www.youtube.com/@BrendanGalea)
