@@ -4,12 +4,14 @@ This C++ project is to build a modern rasterization pipeline around the Vulkan g
 
 ![vulkan_pipeline_block_diagram](https://user-images.githubusercontent.com/25319668/221376812-bfd1e65e-19df-440b-b30f-47f6c5b1b728.png)
 
-GPU Memory and Command Execution   |  A Rasterization pipeline is a Data Structure within Command
+GPU Memory and Command Execution   |  A Rasterization Pipeline Data Structure  within Command
 :-------------------------:|:-------------------------:
-<img width="500" alt="Screenshot 2023-03-19 at 18 55 01" src="https://user-images.githubusercontent.com/25319668/226214894-b4131234-9e25-4890-81a0-8ccc554e72bc.png">  |  <img width="500" alt="Screenshot 2023-03-19 at 18 54 22" src="https://user-images.githubusercontent.com/25319668/226214899-01bfa1e0-7125-4056-aabc-8d15db86c54e.png">
+  <img width="1275" alt="Screenshot 2023-03-19 at 19 10 51" src="https://user-images.githubusercontent.com/25319668/226215876-b39afd85-4124-438d-b2b7-d9426e12eb9d.png"> |  <img width="1268" alt="Screenshot 2023-03-19 at 19 11 04" src="https://user-images.githubusercontent.com/25319668/226215875-f290278f-4f60-42c4-8f57-f49a9935314d.png">
 
 
-
+A General Purpose Compute Pipeline Data Structure within Command   |  A Ray Tracing DAG Pipeline Data Structure within Command 
+:-------------------------:|:-------------------------:
+<img width="851" alt="Screenshot 2023-03-19 at 19 11 25" src="https://user-images.githubusercontent.com/25319668/226215874-a0f56974-5007-476b-8ed9-01c5dbbf3b89.png"> | <img width="1189" alt="Screenshot 2023-03-19 at 19 12 51" src="https://user-images.githubusercontent.com/25319668/226215873-0ee01de6-a2f7-4e58-9d2f-8a8f4e5d8e73.png">  
 
 
 ## About
