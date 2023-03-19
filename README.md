@@ -4,6 +4,13 @@ This C++ project is to build a modern rasterization pipeline around the Vulkan g
 
 ![vulkan_pipeline_block_diagram](https://user-images.githubusercontent.com/25319668/221376812-bfd1e65e-19df-440b-b30f-47f6c5b1b728.png)
 
+GPU Memory and Command Execution   |  A Rasterization pipeline is a Data Structure within Command
+:-------------------------:|:-------------------------:
+<img width="500" alt="Screenshot 2023-03-19 at 18 55 01" src="https://user-images.githubusercontent.com/25319668/226214894-b4131234-9e25-4890-81a0-8ccc554e72bc.png">  |  <img width="500" alt="Screenshot 2023-03-19 at 18 54 22" src="https://user-images.githubusercontent.com/25319668/226214899-01bfa1e0-7125-4056-aabc-8d15db86c54e.png">
+
+
+
+
 
 ## About
 
