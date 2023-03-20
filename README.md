@@ -57,6 +57,8 @@ Tile-based Forward architecture is proposed by a paper with a fancy name:
 
 [Foward+](https://takahiroharada.files.wordpress.com/2015/04/forward_plus.pdf)
 
+**ARM Tile based GPU**
+
 ![Tile GPU](https://user-images.githubusercontent.com/25319668/226348188-cda74d28-4170-405c-984d-16cdcb6f6e16.svg)
 
 
