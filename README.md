@@ -30,7 +30,7 @@ A General Purpose Compute Pipeline Data Structure within Command   |  A Ray Trac
 - Wait Idle Operations (GPU -> CPU sync, CPU waits on queue or device)
 - Fences (GPU -> CPU sync, CPU waits on a fenced subset of a queue and prior command buffers)
 - Semaphores (queue sync)
-  - Binary Semaphores (queue -> queue sync, GPU only)
+  - Binary Semaphores (queue -> queue sync, GPU only, Swap Chain presentation and drawing)
   - Timeline Semaphores (queue -> queue sync, CPU <-> GPU sync)
 - Pipeline Barriers (command -> command sync, intra-queue)
   - Execution Barriers (execution-only dependency, memory disregarded)
