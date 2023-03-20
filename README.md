@@ -19,16 +19,24 @@ A General Purpose Compute Pipeline Data Structure within Command   |  A Ray Trac
 
 <img width="1254" alt="Screenshot 2023-03-19 at 19 40 30" src="https://user-images.githubusercontent.com/25319668/226217576-2bc72ef1-15e6-4cdc-8579-446b9536362a.png">
 
-- Wait Idle Operations (device -> host sync)
-- Fences (device -> host sync)
+### Race Conditions
+
+1. Read-after-Write (R-a-W) – the memory write in one operation starts overwriting the memory that another operation’s read needs to use.
+2. Write-after-Read (W-a-R) – the memory read in one operation hasn’t yet finished before another operation starts overwriting that memory.
+3. Write-after-Write (W-a-W) – two operations start overwriting the same memory and the end result is non-deterministic.
+
+### Sync Locks 
+
+- Wait Idle Operations (GPU -> CPU sync)
+- Fences (GPU -> CPU sync)
 - Semaphores (queue sync)
-  - Binary Semaphores (queue -> queue sync, device only)
-  - Timeline Semaphores (queue -> queue sync, host <-> device sync)
+  - Binary Semaphores (queue -> queue sync, GPU only)
+  - Timeline Semaphores (queue -> queue sync, CPU <-> GPU sync)
 - Pipeline Barriers (command -> command sync, intra-queue)
   - Execution Barriers (execution-only dependency, memory disregarded)
   - Memory Barriers (execution and memory dependencies)
 - Render Pass Subpass Dependencies (subpass memory dependencies)
-- Events (“split barriers”, host -> device sync)
+- Events (“split barriers”, CPU -> GPU sync)
 
 ## About
 
