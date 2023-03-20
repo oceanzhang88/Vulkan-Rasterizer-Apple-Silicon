@@ -92,4 +92,4 @@ cd build
 ## Credits
 
 1. Thanks to the wonderful tutorial by [Brendan](https://www.youtube.com/@BrendanGalea)
-2. Thanks to the [Vulkan Docs](https://vulkan.lunarg.com/doc/sdk/1.3.239.0/windows/getting_started.html)
+2. Thanks to the [Vulkan Docs](https://www.vulkan.org/learn#vulkan-tutorials)
