@@ -28,7 +28,7 @@ A General Purpose Compute Pipeline Data Structure within Command   |  A Ray Trac
 ### Sync Locks 
 
 - Wait Idle Operations (GPU -> CPU sync, CPU waits on queue or device)
-- Fences (GPU -> CPU sync, CPU waits on a subset of a queue-fenced cbs)
+- Fences (GPU -> CPU sync, CPU waits on a fenced subset of a queue)
 - Semaphores (queue sync)
   - Binary Semaphores (queue -> queue sync, GPU only)
   - Timeline Semaphores (queue -> queue sync, CPU <-> GPU sync)
