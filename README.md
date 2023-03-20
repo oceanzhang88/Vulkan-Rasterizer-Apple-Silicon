@@ -25,18 +25,18 @@ A General Purpose Compute Pipeline Data Structure within Command   |  A Ray Trac
 2. Write-after-Read (W-a-R) – the memory read in one operation hasn’t yet finished before another operation starts overwriting that memory.
 3. Write-after-Write (W-a-W) – two operations start overwriting the same memory and the end result is non-deterministic.
 
-### Sync Locks 
+### Sync Locks (left sends signal -> right receives signal)
 
-- Wait Idle Operations (GPU -> CPU sync, CPU waits on queue or device)
-- Fences (GPU -> CPU sync, CPU waits on a fenced subset of a queue and prior command buffers)
-- Semaphores (queue sync)
+- Wait Idle Operations (GPU -> CPU sync, CPU waits on queue or device, cleanup work)
+- Fences (GPU -> CPU sync, CPU waits for acquireNextImage, avoid input latency, NVIDIA/AMD low latency mode)
+- Semaphores (queue sync, between queues)
   - Binary Semaphores (queue -> queue sync, GPU only, Swap Chain presentation and drawing)
   - Timeline Semaphores (queue -> queue sync, CPU <-> GPU sync, Physics Engine)
-- Pipeline Barriers (command -> command sync, intra-queue)
-  - Execution Barriers (execution-only dependency, memory disregarded)
-  - Memory Barriers (execution and memory dependencies)
-- Render Pass Subpass Dependencies (subpass memory dependencies)
-- Events (“split barriers”, CPU -> GPU sync)
+- Pipeline Barriers (command -> command sync, intra-queue, cmds start in order, finish out of order)
+  - Execution Barriers (execution-only dependency, memory disregarded, not commonly used)
+  - Memory Barriers (execution and memory dependencies, optimal layout for operation, image wraps texture)
+- Render Pass Subpass Dependencies (subpass memory dependencies, stage+access flags, similar to memory barrier)
+- Events (“split barriers”, CPU -> GPU sync, not sure how to use)
 
 ## About
 
