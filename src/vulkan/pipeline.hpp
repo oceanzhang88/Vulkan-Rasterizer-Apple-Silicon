@@ -33,11 +33,10 @@ namespace Ocean {
 
     class Pipeline {
     public:
-        Pipeline(
-                Device &device,
-                const std::string &vertFilepath,
-                const std::string &fragFilepath,
-                const PipelineConfigInfo &configInfo);
+        Pipeline(Device &device,
+                 const std::string &vertFilepath,
+                 const std::string &fragFilepath,
+                 const PipelineConfigInfo &configInfo);
 
         ~Pipeline();
 

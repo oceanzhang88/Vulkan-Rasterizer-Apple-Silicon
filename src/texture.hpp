@@ -14,8 +14,7 @@ namespace Ocean {
     public:
         Texture(Device &device, const std::string &textureFilepath);
 
-        Texture(
-                Device &device,
+        Texture(Device &device,
                 VkFormat format,
                 VkExtent3D extent,
                 VkImageUsageFlags usage,

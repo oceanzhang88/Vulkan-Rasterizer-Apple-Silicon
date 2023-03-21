@@ -176,8 +176,6 @@ namespace Ocean {
 
         std::vector<glm::vec3> lightColors{
                 {2.f, .2f, .2f},
-//      {.2f, .2f, 2.f},
-//      {.2f, 2.f, .2f},
                 {2.f, 2.f, .2f},
                 {.2f, 2.f, 2.f},
                 {2.f, 2.f, 2.f}  //
