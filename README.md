@@ -2,6 +2,15 @@
 
 This C++ project is to build a modern rasterization pipeline around the Vulkan graphics API. 
 
+
+## About
+
+Modern Vulkan Graphics API is important in many ways. This project uses Vulkan to build a rasterization pipeline on Apple Silicon M1/2 chip. The default rasterization pipeline is Forward light architecture.
+
+The components of this rasterizer incude: projective camera, shader loading and parsing, texture, Vulkan pipeline components: Device, Swap Chain, Command Buffer, Descriptor, Push Constant, loading obj models, multi-point Lighting, alpha blending and more.
+Meanwhile, you can move the camera around using keyboard keys.
+
+## Vulkan Overview 
 ![vulkan_pipeline_block_diagram](https://user-images.githubusercontent.com/25319668/221376812-bfd1e65e-19df-440b-b30f-47f6c5b1b728.png)
 
 ## Command Buffer and Pipelines 
@@ -13,7 +22,7 @@ GPU Memory and Command Execution   |  A Rasterization Pipeline Data Structure  w
 
 A General Purpose Compute Pipeline Data Structure within Command   |  A Ray Tracing Pipeline Data Structure within Command (2020 and later)
 :-------------------------:|:-------------------------:
-<img width="851" alt="Screenshot 2023-03-19 at 19 11 25" src="https://user-images.githubusercontent.com/25319668/226215874-a0f56974-5007-476b-8ed9-01c5dbbf3b89.png"> | <img width="1189" alt="Screenshot 2023-03-19 at 19 12 51" src="https://user-images.githubusercontent.com/25319668/226215873-0ee01de6-a2f7-4e58-9d2f-8a8f4e5d8e73.png">  
+<img width="851" alt="Screenshot 2023-03-19 at 19 11 25" src="https://user-images.githubusercontent.com/25319668/226215874-a0f56974-5007-476b-8ed9-01c5dbbf3b89.png"> | <img width="503" alt="Screenshot 2023-03-28 at 10 38 32" src="https://user-images.githubusercontent.com/25319668/228274431-8764d17a-83a7-473f-8e0e-39ff18cbc71f.png">
 
 ## Commands and Synchronization
 
@@ -38,12 +47,7 @@ A General Purpose Compute Pipeline Data Structure within Command   |  A Ray Trac
 - Render Pass Subpass Dependencies (subpass memory dependencies, stage+access flags, similar to memory barrier)
 - Events (“split barriers”, CPU -> GPU sync, not sure how to use)
 
-## About
-
-Modern Vulkan Graphics API is important in many ways. This project uses Vulkan to build a rasterization pipeline on Apple Silicon M1/2 chip. The default rasterization pipeline is Forward light architecture.
-
-The components of this rasterizer incude: projective camera, shader loading and parsing, texture, Vulkan pipeline components: Device, Swap Chain, Command Buffer, Descriptor, Push Constant, loading obj models, multi-point Lighting, alpha blending and more.
-Meanwhile, you can move the camera around using keyboard keys.
+## Lighting Architecture
 
 ***NOTE:*** Lighting pipeline architecture choice (Forward/Deferred/Tile-based Forward/Tile-based Deferred) is how we orchestrate Vulkan API not a built-in part of Vulkan or any other Graphics APIs.
 
@@ -57,9 +61,9 @@ Tile-based Forward architecture is proposed by a paper with a fancy name:
 
 [Foward+](https://takahiroharada.files.wordpress.com/2015/04/forward_plus.pdf)
 
-**ARM Tile based GPU**
+**Tile based GPU**
 
-![Tile GPU](https://user-images.githubusercontent.com/25319668/226348188-cda74d28-4170-405c-984d-16cdcb6f6e16.svg)
+![Tile GPU](https://user-images.githubusercontent.com/25319668/228275281-551ea68a-bef5-45d6-99fb-ce537c23a0f0.svg)
 
 
 ## Demo
